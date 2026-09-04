@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>🔐 Desbloquea el archivo</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #6dd5ed, #2193b0);
+        padding: 20px;
+      }
+
+      .contenedor {
+        width: 100%;
+        max-width: 500px;
+        background: white;
+        border-radius: 25px;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      .candado {
+        font-size: 80px;
+        margin-bottom: 10px;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      p {
+        color: #666;
+        font-size: 18px;
+        line-height: 1.5;
+      }
+
+      input {
+        width: 100%;
+        padding: 18px;
+        margin-top: 25px;
+        border: 3px solid #ddd;
+        border-radius: 15px;
+        font-size: 24px;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 8px;
+        outline: none;
+      }
+
+      input:focus {
+        border-color: #2193b0;
+      }
+
+      button {
+        width: 100%;
+        margin-top: 15px;
+        padding: 17px;
+        border: none;
+        border-radius: 15px;
+        background: #2193b0;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      button:hover {
+        transform: scale(1.03);
+      }
+
+      .mensaje {
+        min-height: 30px;
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .error {
+        color: #e53935;
+      }
+
+      .correcto {
+        color: #2e7d32;
+      }
+
+      .pista {
+        margin-top: 25px;
+        background: #f1f8ff;
+        padding: 15px;
+        border-radius: 15px;
+        font-size: 15px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="contenedor">
+      <div class="candado" id="candado">🔒</div>
+
+      <h1>¡Desbloquea el archivo!</h1>
+
+      <p>Ingresa la clave secreta para desbloquear el archivo.</p>
+
+      <input type="text" id="clave-secreta" autocomplete="off" />
+
+      <button onclick="comprobarClaveSecreta()">🔓 DESBLOQUEAR</button>
+
+      <div class="mensaje" id="mensaje"></div>
+
+      <div class="pista">
+        💡 <strong>TIP:</strong><br />
+        Lee cuidadosamente las instrucciones.
+      </div>
+    </div>
+
+    <script>
+      const claves_validas = [
+        "ASDFGH",
+        "PARQUE DE LA REINA",
+        "6802162259",
+        "🧑‍🚀🚀🌕",
+        "🥧🕯️🥳",
+        "🐕⚽🌧️",
+      ];
+      const recursos_clave = {
+        ASDFGH: {
+          archivo:
+            "https://docs.google.com/document/d/1Yk9n1O5Hppc5jSrAoXaLnhv-s1u-uE_aOUHQdGNWeEw/edit?usp=drive_link",
+          mensaje: "🌍 ¡Correcto! Archivo #2 desbloqueado.",
+        },
+        "PARQUE DE LA REINA": {
+          archivo:
+            "https://docs.google.com/document/d/103OmlCPMZUalN52Rk5ZfsT3WrfpzlRFGqfoTUecRquQ/edit?usp=drive_link",
+          mensaje: "🔢 ¡Correcto! Archivo #3 desbloqueado.",
+        },
+        6802162259: {
+          archivo:
+            "https://docs.google.com/document/d/1S_KLPYoNBpjTRTnQEtqParSBKdzeIUJtoTe_-uhnsoI/edit?usp=drive_link",
+          mensaje: "🎉 ¡Correcto! Archivo #4 desbloqueado.",
+        },
+        "🧑‍🚀🚀🌕": {
+          archivo:
+            "https://docs.google.com/document/d/1VNWuVeDulPBuI0xJYhJiCRoIAk68jnR01Hmh1wjFNNM/edit?usp=drive_link",
+          mensaje: "🚀 ¡Correcto! Ultimo archivo desbloqueado.",
+        },
+        "🥧🕯️🥳": {
+          archivo:
+            "https://docs.google.com/document/d/1VNWuVeDulPBuI0xJYhJiCRoIAk68jnR01Hmh1wjFNNM/edit?usp=drive_link",
+          mensaje: "🥳 ¡Correcto! Ultimo archivo desbloqueado.",
+        },
+        "🐕⚽🌧️": {
+          archivo:
+            "https://docs.google.com/document/d/1VNWuVeDulPBuI0xJYhJiCRoIAk68jnR01Hmh1wjFNNM/edit?usp=drive_link",
+          mensaje: "⚽ ¡Correcto! Ultimo archivo desbloqueado.",
+        },
+      };
+
+      function comprobarClaveSecreta() {
+        const input = document.getElementById("clave-secreta");
+        const mensaje = document.getElementById("mensaje");
+        const candado = document.getElementById("candado");
+        const contenedor = document.querySelector(".contenedor");
+
+        const clave_secreta = input.value.trim().toUpperCase();
+
+        /** Clave especial de felicitaciones **/
+        if (clave_secreta === "554") {
+          contenedor.innerHTML = `
+        <div style="font-size: 80px; margin-bottom: 15px;">
+          🎉🏆🎓
+        </div>
+
+        <h1 style="color: #2193b0;">
+          ¡FELICIDADES!
+        </h1>
+
+        <h2 style="color: #333;">
+          ¡Agentes Digitales!
+        </h2>
+
+        <p style="font-size: 20px;">
+          Han completado la actividad con éxito.
+        </p>
+
+        <p style="font-size: 18px;">
+          🧠 Excelente trabajo, creatividad y dedicación.
+        </p>
+
+        <div style="
+          margin-top: 25px;
+          padding: 20px;
+          background: #f1f8ff;
+          border-radius: 15px;
+          font-size: 18px;
+          font-weight: bold;
+          color: #2193b0;
+        ">
+          🚀 ¡Misión cumplida! 🚀
+        </div>
+      `;
+
+          return;
+        }
+
+        /** Clave especial de la misión **/
+        if (claves_validas.includes(clave_secreta)) {
+          const recurso = recursos_clave[clave_secreta];
+
+          mensaje.className = "mensaje correcto";
+          mensaje.innerHTML = recurso.mensaje;
+          candado.textContent = "🔓";
+
+          window.location.href = recurso.archivo;
+        } else {
+          mensaje.className = "mensaje error";
+          mensaje.innerHTML = "❌ Clave incorrecta. Intenta de nuevo.";
+          candado.textContent = "🔒";
+          return;
+        }
+      }
+
+      document
+        .getElementById("clave-secreta")
+        .addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            comprobarClaveSecreta();
+          } else {
+            mensaje.className = "mensaje";
+            mensaje.innerHTML = "";
+            candado.textContent = "🔒";
+          }
+        });
+    </script>
+  </body>
+</html>
